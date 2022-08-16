@@ -11,7 +11,16 @@ from vtk.util.numpy_support import vtk_to_numpy
 
 def load_volume(path):
 
-    reader = vtk.vtkMetaImageReader()
+    if path.endswith('.mha') or path.endswith('.mhd'):
+        reader = vtk.vtkMetaImageReader()
+    elif path.endswith('.nii') or path.endswith('.nii.gz'):
+        reader = vtk.vtkNIFTIImageReader()
+    else:
+        error_message = (
+            'Unsupported file extension. '
+            "Support only '.mha', '.mhd', '.nii' and '.nii.gz'."
+        )
+        raise ValueError(error_message)
     reader.SetFileName(path)
     reader.Update()
 
