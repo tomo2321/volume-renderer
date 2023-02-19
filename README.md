@@ -100,8 +100,6 @@ renderer.add_actor(IsosurfaceActor(source, index=2, rgb=[1.,1.,1.], alpha=0.3))
 renderer.add_actor(IsosurfaceActor(source, index=22, rgb=[0.5,0.5,0.5], alpha=0.3))
 renderer.add_actor(SurfaceDistanceActor(source, target, source_index, target_index, clim=clim))
 proj = renderer.render(rotate_angles=rotate_angles, bg=bg)
-
-return proj
 ```
 <img src='figs/custom.jpg' width='150px'>
 
@@ -122,28 +120,31 @@ renderer.add_actor(SliceActor(volume, normal=(1,0,0), clim=clim))
 renderer.add_actor(SliceActor(volume, normal=(0,1,0), clim=clim))
 renderer.add_actor(SliceActor(volume, normal=(0,0,1), clim=clim))
 proj = renderer.render(rotate_angles=rotate_angles, bg=bg)
-
-return proj
 ```
 <img src='figs/slice.jpg' width='150px'>
 
-#### Landmark
+#### Landmark and Line
 ```python
 from pyvr.renderer import Renderer
 from pyvr.actors import VolumeActor
 from pyvr.actors import LandmarkActor
+from pyvr.actors import LineActor
 
 renderer = Renderer()
 renderer.set_camera(pos=(0,-1000,0))
 renderer.add_actor(VolumeActor(volume, 'bone'))
-renderer.add_actor(LandmarkActor((99.658,-53.036,-195.258), 10, rgb=(1,0,0)))
-renderer.add_actor(LandmarkActor((-105.237,-57.957,-188.071), 10, rgb=(0,1,0)))
-renderer.add_actor(LandmarkActor((0.753,-52.335,-105.167), 10, rgb=(0,0,1)))
+lt_ASIS = (118.198, -46.615, 187.801)
+rt_ASIS = (-119.837, -49.702, 177.924)
+pubic_tubercle = (2.919, -44.044, 98.295)
+renderer.add_actor(LandmarkActor(lt_ASIS, 7, rgb=(1,0,0)))
+renderer.add_actor(LandmarkActor(rt_ASIS, 7, rgb=(0,1,0)))
+renderer.add_actor(LandmarkActor(pubic_tubercle, 7, rgb=(0,0,1)))
+renderer.add_actor(LineActor(lt_ASIS, rt_ASIS, rgb=(0,0,1)))
+renderer.add_actor(LineActor(lt_ASIS, pubic_tubercle, rgb=(0,1,0)))
+renderer.add_actor(LineActor(rt_ASIS, pubic_tubercle, rgb=(1,0,0)))
 proj = renderer.render(rotate_angles=rotate_angles, bg=bg)
-
-return proj
 ```
-<img src='figs/landmark.jpg' width='150px'>
+<img src='figs/landmark_and_line.jpg' width='150px'>
 
 
 #### Write projections as video
