@@ -35,7 +35,7 @@ def centering(volume):
 
     shape = np.asarray(volume.GetDimensions())
     spacing = np.asarray(volume.GetSpacing())
-    origin = - shape * spacing / 2.
+    origin = - (shape - 1) * spacing / 2.
     volume.SetOrigin(origin)
 
     return volume
