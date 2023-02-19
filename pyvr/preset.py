@@ -17,17 +17,21 @@ class Preset(metaclass=ABCMeta):
 
     preset_dir = None
 
-    def __init__(self, name):
+    def __init__(self, preset):
 
-        _, ext = os.path.splitext(name)
+        if isinstance(preset, dict):
+            pass
+        elif isinstance(preset, str):
+            name = preset
+            _, ext = os.path.splitext(name)
 
-        if ext in ['.json', '.JSON']:
-            preset_path = name
-        else:
-            preset_path = os.path.join(self.preset_dir, name + '.json')
+            if ext in ['.json', '.JSON']:
+                preset_path = name
+            else:
+                preset_path = os.path.join(self.preset_dir, name + '.json')
 
-        with open(preset_path) as f:
-            preset = json.load(f)
+            with open(preset_path) as f:
+                preset = json.load(f)
 
         self.preset = preset
 
