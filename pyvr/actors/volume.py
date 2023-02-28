@@ -18,8 +18,12 @@ class VolumeActor(Actor):
 
         if isinstance(volume, str):
             volume = load_volume(volume)
-
-        if isinstance(volume, np.ndarray):
+        elif isinstance(volume, dict):
+            spacing = volume.get('spacing', (1, 1, 1))
+            origin = volume.get('origin', (0, 0, 0))
+            array = volume['array']
+            volume = numpy_to_volume(array, spacing, origin)
+        elif isinstance(volume, np.ndarray):
             spacing, origin = [1,1,1], [0,0,0]
             volume = numpy_to_volume(volume, spacing, origin)
 
